@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+  <!-- index22:59-->
   <head>
     <meta charset="utf-8" />
     <meta
@@ -33,8 +34,8 @@
       href="{% static 'clinicapp/css/style.css' %}"
     />
     <!--[if lt IE 9]>
-      <script src="clinicapp/js/html5shiv.min.js"></script>
-      <script src="clinicapp/js/respond.min.js"></script>
+      <script src="{% static 'clinicapp/js/html5shiv.min.js' %}"></script>
+      <script src="{% static 'clinicapp/js/respond.min.js' %}"></script>
     <![endif]-->
   </head>
 
@@ -49,7 +50,7 @@
               height="35"
               alt=""
             />
-            <span>Danteclinic</span>
+            <span>Preclinic</span>
           </a>
         </div>
         <a id="toggle_btn" href="javascript:void(0);"
@@ -729,7 +730,7 @@
                         <div class="float-left user-img m-r-10">
                           <a href="profile.html" title="John Doe"
                             ><img
-                              src="{%  static 'clinicapp/img/user.jpg' %}"
+                              src="{% static 'clinicapp/img/user.jpg' %}"
                               alt=""
                               class="w-40 rounded-circle" /><span
                               class="status online"
@@ -829,7 +830,7 @@
                         <div class="float-left user-img m-r-10">
                           <a href="profile.html" title="Richard Miles"
                             ><img
-                              src="{%  static 'clinicapp/img/user.jpg' %}"
+                              src="{% static 'clinicapp/img/user.jpg' %}"
                               alt=""
                               class="w-40 rounded-circle" /><span
                               class="status away"
@@ -1272,12 +1273,14 @@
       </div>
     </div>
     <div class="sidebar-overlay" data-reff=""></div>
-    <script src="{% static 'clinicapp/jquery-3.2.1.min.js' %}"></script>
-    <script src="{% static 'clinicapp/popper.min.js' %}"></script>
-    <script src="{% static 'clinicapp/bootstrap.min.js' %}"></script>
-    <script src="{% static 'clinicapp/jquery.slimscroll.js' %}"></script>
-    <script src="{% static 'clinicapp/Chart.bundle.js' %}"></script>
-    <script src="{% static 'clinicapp/chart.js' %}"></script>
-    <script src="{% static 'clinicapp/app.js' %}"></script>
+    <script src="{% static 'clinicapp/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'clinicapp/js/popper.min.js' %}"></script>
+    <script src="{% static 'clinicapp/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'clinicapp/js/jquery.slimscroll.js' %}"></script>
+    <script src="{% static 'clinicapp/js/Chart.bundle.js' %}"></script>
+    <script src="{% static 'clinicapp/js/chart.js' %}"></script>
+    <script src="{% static 'clinicapp/js/app.js' %}"></script>
   </body>
+
+  <!-- index22:59-->
 </html>
