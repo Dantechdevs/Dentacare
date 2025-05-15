@@ -42,7 +42,7 @@
     <div class="main-wrapper">
       <div class="header">
         <div class="header-left">
-          <a href="dashboard.html" class="logo">
+          <a href="{% url 'dashboard' %}" class="logo">
             <img
               src="{% static 'clinicapp/img/logo.png' %}"
               width="35"
@@ -234,7 +234,7 @@
             <ul>
               <li class="menu-title">Main</li>
               <li class="active">
-                <a href="dashboard.html"
+                <a href="{% url 'dashboard' %}"
                   ><i class="fa fa-dashboard"></i> <span>Dashboard</span></a
                 >
               </li>

@@ -8,4 +8,5 @@ urlpatterns = [
     path('edit-doctor/<int:doctor_id>/', views.edit_doctor, name='edit_doctor'),
     path('delete-doctor/<int:doctor_id>/', views.delete_doctor, name='delete_doctor'),
     path('dashboard.html', views.dashboard, name='dashboard'),
+    path('add-occupation/', views.add_occupation, name='add_occupation'),  # 👈 Add this line
 ]

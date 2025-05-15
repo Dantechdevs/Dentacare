@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'clinicapp/img/favicon.ico' %}"
+    />
+    <title>Danteclinic - Add Occupation</title>
+    <link
+      rel="stylesheet"
+      href="{% static 'clinicapp/css/bootstrap.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'clinicapp/css/font-awesome.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'clinicapp/css/style.css' %}" />
+  </head>
+
+  <body>
+    <div class="main-wrapper">
+      <!-- Header -->
+      <div class="header">
+        <div class="header-left">
+          <a href="{% url 'home' %}" class="logo">
+            <img
+              src="{% static 'clinicapp/img/logo.png' %}"
+              width="35"
+              height="35"
+              alt="Logo"
+            />
+            <span>Danteclinic</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <!-- Sidebar content (optional) -->
+      </div>
+
+      <div class="page-wrapper">
+        <div class="content">
+          <!-- Flash Messages -->
+          {% if messages %}
+          <div
+            class="alert alert-success alert-dismissible fade show col-lg-8 offset-lg-2"
+          >
+            {% for message in messages %} {{ message }} {% endfor %}
+            <button type="button" class="close" data-dismiss="alert">
+              <span>&times;</span>
+            </button>
+          </div>
+          {% endif %}
+
+          <!-- Add Occupation Form -->
+          <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+              <h4 class="page-title">Add New Occupation</h4>
+              <form method="POST" novalidate>
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="occupation_name"
+                    >Occupation Name <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="occupation_name"
+                    name="name"
+                    placeholder="e.g. Cardiologist, Pediatrician"
+                    required
+                  />
+                </div>
+                <div class="form-group text-center mt-4">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-plus-circle"></i> Add Occupation
+                  </button>
+                  <a
+                    href="{% url 'add_doctor' %}"
+                    class="btn btn-secondary ms-2"
+                    >Back</a
+                  >
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{% static 'clinicapp/js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'clinicapp/js/bootstrap.bundle.min.js' %}"></script>
+  </body>
+</html>

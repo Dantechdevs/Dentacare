@@ -128,21 +128,29 @@
                     </div>
                   </div>
 
-                  <!-- Professional Details -->
+                  <!-- Updated Occupation with Add button -->
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <label
-                        >Occupation <span class="text-danger">*</span></label
-                      >
-                      <select
-                        class="form-control select"
-                        name="occupation"
-                        required
-                      >
-                        {% for value, name in occupations %}
-                        <option value="{{ value }}" {% if value == doctor.occupation %}selected{% endif %}>{{ name }}</option>
-                        {% endfor %}
-                      </select>
+                      <label>
+                        Occupation <span class="text-danger">*</span>
+                      </label>
+                      <div class="input-group">
+                        <select
+                          class="form-control select"
+                          name="occupation"
+                          required
+                        >
+                          <option value="" disabled>Select occupation</option>
+                          {% for value, name in occupations %}
+                            <option value="{{ value }}" {% if value == doctor.occupation %}selected{% endif %}>
+                              {{ name }}
+                            </option>
+                          {% endfor %}
+                        </select>
+                        <a href="{% url 'add_occupation' %}" class="btn btn-outline-primary ms-2" title="Add new occupation">
+                          <i class="fa fa-plus"></i>
+                        </a>
+                      </div>
                     </div>
                   </div>
 

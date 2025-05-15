@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <!-- add-doctor24:06-->
   <head>
     <meta charset="utf-8" />
     <meta
@@ -13,7 +12,7 @@
       type="image/x-icon"
       href="{% static 'clinicapp/img/favicon.ico' %}"
     />
-    <title>Danteclinic - Medical & Hospital</title>
+    <title>Danteclinic - Add Doctor</title>
     <link
       rel="stylesheet"
       type="text/css"
@@ -47,35 +46,38 @@
 
   <body>
     <div class="main-wrapper">
+      <!-- Header -->
       <div class="header">
-        <!-- Full original header content remains unchanged -->
         <div class="header-left">
-          <a href="index-2.html" class="logo">
+          <a href="{% url 'home' %}" class="logo">
             <img
               src="{% static 'clinicapp/img/logo.png' %}"
               width="35"
               height="35"
-              alt=""
+              alt="Logo"
             />
             <span>Danteclinic</span>
           </a>
         </div>
-        <!-- Full navigation and user menu elements unchanged -->
+        <!-- Navigation menu here -->
       </div>
 
+      <!-- Sidebar -->
       <div class="sidebar" id="sidebar">
-        <!-- Complete original sidebar with all menu items preserved -->
+        <!-- Sidebar content here -->
       </div>
 
       <div class="page-wrapper">
         <div class="content">
-          <!-- Success Messages -->
+          <!-- Messages -->
           {% if messages %}
           <div
-            class="alert alert-success alert-dismissible fade show"
+            class="alert alert-success alert-dismissible fade show col-lg-8 offset-lg-2"
             role="alert"
           >
-            {% for message in messages %} {{ message }} {% endfor %}
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
             <button
               type="button"
               class="close"
@@ -87,290 +89,190 @@
           </div>
           {% endif %}
 
+          <!-- Form Errors -->
+          {% if form.errors %}
+          <div
+            class="alert alert-danger alert-dismissible col-lg-8 offset-lg-2"
+          >
+            <button type="button" class="close" data-dismiss="alert">
+              &times;
+            </button>
+            <strong>Errors:</strong>
+            <ul>
+              {% for field, errors in form.errors.items %}
+              <li>{{ field|title }}: {{ errors|join:", " }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+
+          <!-- Main Form -->
           <div class="row">
             <div class="col-lg-8 offset-lg-2">
               <h4 class="page-title">Add Doctor</h4>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-8 offset-lg-2">
-              <form method="POST" enctype="multipart/form-data">
+              <form method="POST" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
                 <div class="row">
+                  <!-- Personal Information -->
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <label
+                      <label for="id_first_name"
                         >First Name <span class="text-danger">*</span></label
                       >
                       <input
-                        class="form-control"
                         type="text"
+                        class="form-control"
+                        id="id_first_name"
                         name="first_name"
+                        value="{{ form.first_name.value|default_if_none:'' }}"
                         required
                       />
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <label
+                      <label for="id_last_name"
                         >Last Name <span class="text-danger">*</span></label
                       >
                       <input
-                        class="form-control"
                         type="text"
+                        class="form-control"
+                        id="id_last_name"
                         name="last_name"
+                        value="{{ form.last_name.value|default_if_none:'' }}"
                         required
                       />
                     </div>
                   </div>
 
-                  <!-- Preserved original structure for email field -->
+                  <!-- Contact Information -->
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <label>Email <span class="text-danger">*</span></label>
+                      <label for="id_email"
+                        >Email <span class="text-danger">*</span></label
+                      >
                       <input
-                        class="form-control"
                         type="email"
-                        name="email"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <!-- Maintained phone number section -->
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label>Phone <span class="text-danger">*</span></label>
-                      <input
                         class="form-control"
+                        id="id_email"
+                        name="email"
+                        value="{{ form.email.value|default_if_none:'' }}"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="id_phone"
+                        >Phone <span class="text-danger">*</span></label
+                      >
+                      <input
                         type="tel"
+                        class="form-control"
+                        id="id_phone"
                         name="phone"
-                        pattern="[0-9]{10}"
+                        pattern="07[0-9]{8}"
+                        value="{{ form.phone.value|default_if_none:'' }}"
                         required
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Professional Details with Add Occupation Button -->
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="id_occupation"
+                        >Specialization
+                        <span class="text-danger">*</span></label
+                      >
+                      <div class="input-group">
+                        <select
+                          class="form-control select"
+                          id="id_occupation"
+                          name="occupation"
+                          required
+                        >
+                          <option value="" disabled selected>Select specialization</option>
+                          {% for occupation in occupations %}
+                            <option value="{{ occupation.id }}"
+                              {% if form.occupation.value|stringformat:"s" == occupation.id|stringformat:"s" %}
+                                selected
+                              {% endif %}
+                            >
+                              {{ occupation.name }}
+                            </option>
+                          {% endfor %}
+                        </select>
+                        <a href="{% url 'add_occupation' %}" class="btn btn-outline-primary ms-2" title="Add new occupation">
+                          <i class="fa fa-plus"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Other fields, e.g., bio, address, county, avatar -->
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="id_bio">Professional Biography</label>
+                      <textarea
+                        class="form-control"
+                        id="id_bio"
+                        name="bio"
+                        rows="4"
+                      >{{ form.bio.value|default_if_none:'' }}</textarea>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="id_address">Clinic Address</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="id_address"
+                        name="address"
+                        value="{{ form.address.value|default_if_none:'' }}"
                       />
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <label
-                        >Occupation <span class="text-danger">*</span></label
-                      >
-                      <select
-                        class="form-control select"
-                        name="occupation"
-                        required
-                      >
-                        <option value="">Select Role</option>
-                        <option value="doctor">Medical Doctor</option>
-                        <option value="nurse">Registered Nurse</option>
-                        <option value="surgeon">Surgeon</option>
-                        <option value="physician">Physician</option>
-                        <option value="specialist">Medical Specialist</option>
-                        <option value="pharmacist">Pharmacist</option>
-                        <option value="technician">Medical Technician</option>
-                        <option value="therapist">Physical Therapist</option>
-                        <option value="administrator">
-                          Clinic Administrator
-                        </option>
-                        <option value="researcher">Medical Researcher</option>
-                      </select>
+                      <label for="id_county">County of Practice</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="id_county"
+                        name="county"
+                        value="{{ form.county.value|default_if_none:'' }}"
+                      />
                     </div>
                   </div>
-
-                  <!-- Full address section with original structure -->
-                  <div class="col-sm-12">
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <div class="form-group">
-                          <label>Clinic Address</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            name="address"
-                          />
-                        </div>
-                      </div>
-                      <!-- Preserved country/city/state inputs -->
-                      <div class="col-sm-6 col-md-6 col-lg-3">
-                        <div class="form-group">
-                          <label>County</label>
-                          <select class="form-control select" name="country">
-                            <option value="001">Mombasa</option>
-                            <option value="002">Kwale</option>
-                            <option value="003">Kilifi</option>
-                            <option value="004">Tana River</option>
-                            <option value="005">Lamu</option>
-                            <option value="006">Taita Taveta</option>
-                            <option value="007">Garissa</option>
-                            <option value="008">Wajir</option>
-                            <option value="009">Mandera</option>
-                            <option value="010">Marsabit</option>
-                            <
-                            <option value="011">Isiolo</option>
-                            <
-                            <option value="012">Meru</option>
-                            <
-                            <option value="013">Tharaka-Nithi</option>
-                            <
-                            <option value="014">Embu</option>
-                            <
-                            <option value="015">Kitui</option>
-                            <
-                            <option value="016">Machakos</option>
-                            <
-                            <option value="017">Makueni</option>
-                            <
-                            <option value="018">Nyandarua</option>
-                            <
-                            <option value="019">Nyeri</option>
-                            <
-                            <option value="020">Kirinyaga</option>
-                            <
-                            <option value="021">Murang'a</option>
-                            <
-                            <option value="022">Kiambu</option>
-                            <
-                            <option value="023">Turkana</option>
-                            <
-                            <option value="024">West Pokot</option>
-                            <
-                            <option value="025">Samburu</option>
-                            <
-                            <option value="026">Trans Nzoia</option>
-                            <
-                            <option value="027">Uasin Gishu</option>
-                            <
-                            <option value="028">Elgeyo-Marakwet</option>
-                            <option value="029">Nandi</option>
-                            <
-                            <option value="030">Baringo</option>
-                            <
-                            <option value="031">Laikipia</option>
-                            <
-                            <option value="032">Nakuru</option>
-                            <
-                            <option value="033">Narok</option>
-                            <
-                            <option value="034">Kajiado</option>
-                            <
-                            <option value="035">Kericho</option>
-                            <
-                            <option value="036">Bomet</option>
-                            <
-                            <option value="037">Kakamega</option>
-                            <
-                            <option value="038">Vihiga</option>
-                            <
-                            <option value="039">Bungoma</option>
-                            <
-                            <option value="040">Busia</option>
-                            <
-                            <option value="041">Siaya</option>
-                            <
-                            <option value="042">Kisumu</option>
-                            <
-                            <option value="043">Homa Bay</option>
-                            <
-                            <option value="044">Migori</option>
-                            <
-                            <option value="045">Kisii</option>
-                            <
-                            <option value="046">Nyamira</option>
-                            <
-                            <option value="047">Nairobi</option>
-                          </select>
-                        </div>
-                      </div>
-                      <!-- Other address fields unchanged -->
-                    </div>
-                  </div>
-
-                  <!-- Full avatar upload section -->
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <label>Professional Photo</label>
-                      <div class="profile-upload">
-                        <div class="upload-img">
-                          <img
-                            alt=""
-                            src="{% static 'clinicapp/img/user.jpg' %}"
-                          />
-                        </div>
-                        <div class="upload-input">
-                          <input
-                            type="file"
-                            class="form-control"
-                            name="avatar"
-                            accept="image/*"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Preserved biography section -->
-                  <div class="form-group">
-                    <label>Professional Biography</label>
-                    <textarea
-                      class="form-control"
-                      rows="5"
-                      name="bio"
-                    ></textarea>
-                  </div>
-
-                  <!-- Original status radio buttons maintained -->
-                  <div class="form-group">
-                    <label class="display-block">Account Status</label>
-                    <div class="form-check form-check-inline">
+                      <label for="id_avatar">Profile Photo</label>
                       <input
-                        class="form-check-input"
-                        type="radio"
-                        name="status"
-                        id="doctor_active"
-                        value="active"
-                        checked
+                        type="file"
+                        class="form-control"
+                        id="id_avatar"
+                        name="avatar"
                       />
-                      <label class="form-check-label" for="doctor_active">
-                        Active
-                      </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="status"
-                        id="doctor_inactive"
-                        value="inactive"
-                      />
-                      <label class="form-check-label" for="doctor_inactive">
-                        Inactive
-                      </label>
                     </div>
                   </div>
+                </div>
 
-                  <!-- Original submit button with enhancements -->
-                  <div class="m-t-20 text-center">
-                    <button type="submit" class="btn btn-primary submit-btn">
-                      <i class="fa fa-user-md"></i> Register Doctor
-                    </button>
-                  </div>
+                <div class="form-group text-center mt-4">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-plus-circle"></i> Add Doctor
+                  </button>
+                  <a href="{% url 'doctors' %}" class="btn btn-secondary ms-2">Cancel</a>
                 </div>
               </form>
             </div>
           </div>
         </div>
-
-        <!-- Full original notification box content preserved -->
-        <div class="notification-box">
-          <!-- ... (complete message list unchanged) ... -->
-        </div>
       </div>
     </div>
 
-    <!-- All original scripts and closing tags preserved -->
-    <div class="sidebar-overlay" data-reff=""></div>
-    <script src="{% static 'clinicapp/js/jquery-3.2.1.min.js' %}"></script>
-    <!-- ... (all other script tags unchanged) ... -->
+    <script src="{% static 'clinicapp/js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'clinicapp/js/bootstrap.bundle.min.js' %}"></script>
   </body>
-  <!-- add-doctor24:06-->
 </html>
