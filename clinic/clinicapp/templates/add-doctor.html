@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -43,10 +42,8 @@
       <script src="{% static 'clinicapp/js/respond.min.js' %}"></script>
     <![endif]-->
   </head>
-
   <body>
     <div class="main-wrapper">
-      <!-- Header -->
       <div class="header">
         <div class="header-left">
           <a href="{% url 'home' %}" class="logo">
@@ -59,25 +56,18 @@
             <span>Danteclinic</span>
           </a>
         </div>
-        <!-- Navigation menu here -->
       </div>
-
-      <!-- Sidebar -->
       <div class="sidebar" id="sidebar">
         <!-- Sidebar content here -->
       </div>
-
       <div class="page-wrapper">
         <div class="content">
-          <!-- Messages -->
           {% if messages %}
           <div
             class="alert alert-success alert-dismissible fade show col-lg-8 offset-lg-2"
             role="alert"
           >
-            {% for message in messages %}
-              {{ message }}
-            {% endfor %}
+            {% for message in messages %} {{ message }} {% endfor %}
             <button
               type="button"
               class="close"
@@ -87,192 +77,9 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          {% endif %}
-
-          <!-- Form Errors -->
-          {% if form.errors %}
-          <div
-            class="alert alert-danger alert-dismissible col-lg-8 offset-lg-2"
-          >
-            <button type="button" class="close" data-dismiss="alert">
-              &times;
-            </button>
-            <strong>Errors:</strong>
-            <ul>
-              {% for field, errors in form.errors.items %}
-              <li>{{ field|title }}: {{ errors|join:", " }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-          {% endif %}
-
-          <!-- Main Form -->
-          <div class="row">
-            <div class="col-lg-8 offset-lg-2">
-              <h4 class="page-title">Add Doctor</h4>
-              <form method="POST" enctype="multipart/form-data" novalidate>
-                {% csrf_token %}
-                <div class="row">
-                  <!-- Personal Information -->
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="id_first_name"
-                        >First Name <span class="text-danger">*</span></label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="id_first_name"
-                        name="first_name"
-                        value="{{ form.first_name.value|default_if_none:'' }}"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="id_last_name"
-                        >Last Name <span class="text-danger">*</span></label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="id_last_name"
-                        name="last_name"
-                        value="{{ form.last_name.value|default_if_none:'' }}"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <!-- Contact Information -->
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="id_email"
-                        >Email <span class="text-danger">*</span></label
-                      >
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="id_email"
-                        name="email"
-                        value="{{ form.email.value|default_if_none:'' }}"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="id_phone"
-                        >Phone <span class="text-danger">*</span></label
-                      >
-                      <input
-                        type="tel"
-                        class="form-control"
-                        id="id_phone"
-                        name="phone"
-                        pattern="07[0-9]{8}"
-                        value="{{ form.phone.value|default_if_none:'' }}"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <!-- Professional Details with Add Occupation Button -->
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="id_occupation"
-                        >Specialization
-                        <span class="text-danger">*</span></label
-                      >
-                      <div class="input-group">
-                        <select
-                          class="form-control select"
-                          id="id_occupation"
-                          name="occupation"
-                          required
-                        >
-                          <option value="" disabled selected>Select specialization</option>
-                          {% for occupation in occupations %}
-                            <option value="{{ occupation.id }}"
-                              {% if form.occupation.value|stringformat:"s" == occupation.id|stringformat:"s" %}
-                                selected
-                              {% endif %}
-                            >
-                              {{ occupation.name }}
-                            </option>
-                          {% endfor %}
-                        </select>
-                        <a href="{% url 'add_occupation' %}" class="btn btn-outline-primary ms-2" title="Add new occupation">
-                          <i class="fa fa-plus"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Other fields, e.g., bio, address, county, avatar -->
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="id_bio">Professional Biography</label>
-                      <textarea
-                        class="form-control"
-                        id="id_bio"
-                        name="bio"
-                        rows="4"
-                      >{{ form.bio.value|default_if_none:'' }}</textarea>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="id_address">Clinic Address</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="id_address"
-                        name="address"
-                        value="{{ form.address.value|default_if_none:'' }}"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="id_county">County of Practice</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="id_county"
-                        name="county"
-                        value="{{ form.county.value|default_if_none:'' }}"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="id_avatar">Profile Photo</label>
-                      <input
-                        type="file"
-                        class="form-control"
-                        id="id_avatar"
-                        name="avatar"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-group text-center mt-4">
-                  <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-plus-circle"></i> Add Doctor
-                  </button>
-                  <a href="{% url 'doctors' %}" class="btn btn-secondary ms-2">Cancel</a>
-                </div>
-              </form>
-            </div>
-          </div>
+          {% endif %} {% block content %}{% endblock %}
         </div>
       </div>
     </div>
-
-    <script src="{% static 'clinicapp/js/jquery-3.5.1.min.js' %}"></script>
-    <script src="{% static 'clinicapp/js/bootstrap.bundle.min.js' %}"></script>
   </body>
 </html>

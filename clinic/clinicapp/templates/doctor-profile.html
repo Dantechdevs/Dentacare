@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
+    <title>{{ medical_professional }} Profile - Kenya Medical Registry</title>
+    <!-- CSS links remain same -->
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <!-- Header/Sidebar remains unchanged -->
+
+      <div class="page-wrapper">
+        <div class="content">
+          <div class="row">
+            <div class="col-sm-7 col-6">
+              <h4 class="page-title">
+                {% trans "Medical Practitioner Profile" %}
+              </h4>
+            </div>
+            <div class="col-sm-5 col-6 text-right m-b-30">
+              <a
+                href="{% url 'edit_doctor' medical_professional.id %}"
+                class="btn btn-primary btn-rounded"
+              >
+                <i class="fa fa-edit"></i> {% trans "Edit Profile" %}
+              </a>
+            </div>
+          </div>
+
+          <!-- Profile Header -->
+          <div class="card-box profile-header">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="profile-view">
+                  <div class="profile-img-wrap">
+                    <div class="profile-img">
+                      <img
+                        class="avatar"
+                        src="{{ medical_professional.avatar.url }}"
+                        alt="{{ medical_professional.get_full_name }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="profile-basic">
+                    <div class="row">
+                      <div class="col-md-5">
+                        <div class="profile-info-left">
+                          <h3 class="user-name m-t-0 mb-0">
+                            {{ medical_professional.first_name }} {{
+                            medical_professional.last_name }}
+                          </h3>
+                          <small class="text-muted">
+                            {{ medical_professional.occupation }}
+                          </small>
+                          <div class="staff-id">
+                            {% trans "License No." %}: {{
+                            medical_professional.license_number }}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-7">
+                        <ul class="personal-info">
+                          <li>
+                            <span class="title">{% trans "Status" %}:</span>
+                            <span
+                              class="text badge {% if medical_professional.status == 'ACT' %}badge-success {% elif medical_professional.status == 'SUS' %}badge-danger {% else %}badge-warning{% endif %}"
+                            >
+                              {{ medical_professional.get_status_display }}
+                            </span>
+                          </li>
+                          <li>
+                            <span class="title">{% trans "County" %}:</span>
+                            <span class="text">
+                              {{ medical_professional.get_county_display }}
+                            </span>
+                          </li>
+                          <li>
+                            <span class="title">{% trans "Contact" %}:</span>
+                            <span class="text">
+                              {{ medical_professional.phone }}
+                            </span>
+                          </li>
+                          <li>
+                            <span class="title">{% trans "Email" %}:</span>
+                            <span class="text">
+                              {{ medical_professional.email }}
+                            </span>
+                          </li>
+                          {% if medical_professional.address %}
+                          <li>
+                            <span class="title"
+                              >{% trans "Clinic Address" %}:</span
+                            >
+                            <span class="text">
+                              {{ medical_professional.address }}
+                            </span>
+                          </li>
+                          {% endif %}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Professional Details Tabs -->
+          <div class="profile-tabs">
+            <ul class="nav nav-tabs nav-tabs-bottom">
+              <li class="nav-item">
+                <a class="nav-link active" href="#bio" data-toggle="tab">
+                  {% trans "Bio" %}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#registration" data-toggle="tab">
+                  {% trans "Registration" %}
+                </a>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <div class="tab-pane show active" id="bio">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card-box">
+                      <h4 class="card-title">
+                        {% trans "Professional Biography" %}
+                      </h4>
+                      <p class="text-muted">
+                        {{ medical_professional.bio|default:_("No biography
+                        available") }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-pane" id="registration">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="card-box">
+                      <h4 class="card-title">{% trans "License Details" %}</h4>
+                      <dl class="row">
+                        <dt class="col-sm-4">{% trans "License Number" %}</dt>
+                        <dd class="col-sm-8">
+                          {{ medical_professional.license_number }}
+                        </dd>
+
+                        <dt class="col-sm-4">
+                          {% trans "Registration Date" %}
+                        </dt>
+                        <dd class="col-sm-8">
+                          {{ medical_professional.created_at|date:"F j, Y" }}
+                        </dd>
+                      </dl>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="card-box">
+                      <h4 class="card-title">{% trans "County Details" %}</h4>
+                      <ul class="personal-info">
+                        <li>
+                          <span class="title"
+                            >{% trans "Practice County" %}:</span
+                          >
+                          <span class="text">
+                            {{ medical_professional.get_county_display }}
+                          </span>
+                        </li>
+                        <li>
+                          <span class="title">{% trans "Last Updated" %}:</span>
+                          <span class="text">
+                            {{ medical_professional.created_at|timesince }} ago
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Scripts remain same -->
+  </body>
+</html>

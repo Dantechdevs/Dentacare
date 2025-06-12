@@ -11,6 +11,11 @@ def doctors(request):
     doctors_list = MedicalProfessional.objects.select_related('occupation').all()
     return render(request, 'doctors.html', {'doctors': doctors_list})
 
+# Doctor profile view
+def doctor_profile(request, doctor_id):
+    medical_professional = get_object_or_404(MedicalProfessional, pk=doctor_id)
+    return render(request, 'doctor-profile.html', {'medical_professional': medical_professional})
+
 # Add doctor view
 def add_doctor(request):
     occupations = Occupation.objects.all()

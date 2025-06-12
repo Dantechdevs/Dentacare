@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="{% static 'clinicapp/css/bootstrap.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'clinicapp/css/style.css' %}" />
+    <title>Register</title>
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="page-wrapper">
+        <div class="content">
+          <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+              <h4 class="page-title">Register</h4>
+              {% if messages %} {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+              {% endfor %} {% endif %}
+              <form method="POST">
+                {% csrf_token %} {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Register</button>
+                <p>
+                  Already have an account? <a href="{% url 'login' %}">Login</a>
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
