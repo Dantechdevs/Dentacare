@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import MedicalProfessional
 
 class MedicalProfessionalForm(forms.ModelForm):
@@ -67,3 +69,40 @@ class MedicalProfessionalForm(forms.ModelForm):
             'bio': 'Professional Biography',
             'avatar': 'Profile Photo',
         }
+
+# 🔐 User Registration Form
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
+        'placeholder': 'Email address',
+        'class': 'form-control'
+    }))
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Username',
+        'class': 'form-control'
+    }))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Password',
+        'class': 'form-control'
+    }))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Confirm Password',
+        'class': 'form-control'
+    }))
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+
+# 🔑 User Login Form (optional if customizing)
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Username',
+        'class': 'form-control'
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Password',
+        'class': 'form-control'
+    }))
+# Note: The LoginForm is optional if you want to customize the default Django login form.
+# You can use the default AuthenticationForm provided by Django if no customization is needed.  

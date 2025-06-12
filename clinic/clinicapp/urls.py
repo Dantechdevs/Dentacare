@@ -15,6 +15,11 @@ urlpatterns = [
     # Dashboard and Occupations
     path('dashboard.html', views.dashboard, name='dashboard'),
     path('add-occupation/', views.add_occupation, name='add_occupation'),
+    
+    # Authentication
+    path('register/', views.register_view, name='register'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout')
 ]
 
 
