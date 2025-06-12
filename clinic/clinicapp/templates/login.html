@@ -2,32 +2,66 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <title>Login | Danteclinic</title>
     <link
       rel="stylesheet"
       href="{% static 'clinicapp/css/bootstrap.min.css' %}"
     />
     <link rel="stylesheet" href="{% static 'clinicapp/css/style.css' %}" />
-    <title>Login</title>
+    <style>
+      body {
+        background-color: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .login-box {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+        text-align: center;
+      }
+      .login-logo img {
+        max-width: 150px;
+        margin-bottom: 20px;
+      }
+      .login-box h4 {
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+      }
+      .alert {
+        text-align: left;
+      }
+    </style>
   </head>
   <body>
-    <div class="main-wrapper">
-      <div class="page-wrapper">
-        <div class="content">
-          <div class="row">
-            <div class="col-lg-6 offset-lg-3">
-              <h4 class="page-title">Login</h4>
-              {% if messages %} {% for message in messages %}
-              <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-              {% endfor %} {% endif %}
-              <form method="POST">
-                {% csrf_token %} {{ form.as_p }}
-                <button type="submit" class="btn btn-primary">Login</button>
-                <p>No account? <a href="{% url 'register' %}">Register</a></p>
-              </form>
-            </div>
-          </div>
-        </div>
+    <div class="login-box">
+      <div class="login-logo">
+        <img
+          src="{% static 'clinicapp/img/logo.png' %}"
+          alt="Danteclinic Logo"
+        />
       </div>
+
+      <h4>Login to Your Account</h4>
+
+      {% if messages %} {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %} {% endif %}
+
+      <form method="POST">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit" class="btn btn-primary w-100 mt-2">Login</button>
+        <p class="mt-3">
+          No account? <a href="{% url 'register' %}">Register</a>
+        </p>
+      </form>
     </div>
   </body>
 </html>

@@ -9,6 +9,7 @@ from .models import MedicalProfessional, Occupation
 from .forms import MedicalProfessionalForm, UserRegisterForm, LoginForm
 
 # Home page view
+@login_required
 def home(request):
     return render(request, 'home.html')
 

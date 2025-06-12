@@ -80,11 +80,11 @@ class UserRegisterForm(UserCreationForm):
         'placeholder': 'Username',
         'class': 'form-control'
     }))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Password',
         'class': 'form-control'
     }))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Confirm Password',
         'class': 'form-control'
     }))
